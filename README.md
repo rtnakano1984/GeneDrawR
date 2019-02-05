@@ -1,10 +1,11 @@
 # GeneDrawR
-## R script to draw gene models based on coordinates
+### R script to draw gene models based on coordinates
 
-### Originally by Ryohei Thomas Nakano, PhD; nakano@mpipz.mpg.de
-### Last update: 05 Feb 2019
+Originally by Ryohei Thomas Nakano, PhD; nakano@mpipz.mpg.de
 
-### usage:
+Last update: 05 Feb 2019
+
+## Usage:
 ```
 Rscript ./gene_moleds.R [path_to_input] [path_to_output]
 ```
@@ -18,6 +19,7 @@ type:                    Either "gene" or "primer", case insensitive
 
 colour:                  Colour code as a text such as #FF0000
 
+## Examples:
 [Example input file](input.txt)
 
 [Example output file](output.pdf)
