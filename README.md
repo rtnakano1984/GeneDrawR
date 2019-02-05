@@ -9,7 +9,7 @@ Originally by Ryohei Thomas Nakano, PhD; nakano@mpipz.mpg.de; Last update: 05 Fe
 
 ## Usage:
 ```
-Rscript ./gene_moleds.R [path_to_input] [path_to_output]
+Rscript ./GeneDrawR.R [path_to_input] [path_to_output]
 ```
 [path_to_input]  has to be a relative or an absolute path to the input file, has to be a tab delimited file containing four columns with a header row (start, end, type, and colour; case insensitive)
 
