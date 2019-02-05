@@ -1,0 +1,15 @@
+
+# unnecessary dataset
+
+# log file
+git_log.txt
+
+# raw data
+*.tar.gz
+
+# other
+*.pdf
+*._*
+*.DS_Store
+*Thumbs.db
+
