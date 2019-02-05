@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # R script to draw gene models based on coordinates
 
@@ -19,3 +20,7 @@ colour:                  Colour code as a text such as #FF0000
 [Example output file](output.pdf)
 
 
+=======
+# GeneDrawR
+R script to draw gene models
+>>>>>>> origin/master
