@@ -26,7 +26,7 @@ rm(list=ls())
 
 
 # dependencies
-library(ggplot2, quietly=T, warn.conflicts=T)
+library(ggplot2, quietly=T, warn.conflicts=F)
 
 
 # functions
