@@ -1,8 +1,9 @@
-
+#!/netscratch/dep_psl/grp_psl/ThomasN/tools/bin/bin/Rscript
 # R script to draw gene models based on coordinates
 #
 # Originally by Ryohei Thomas Nakano, PhD; nakano@mpipz.mpg.de
-# Last update: 05 Feb 2019
+# Ver1 latest update: 05 Feb 2019
+# Ver2 update: 18 July 2022
 
 # usage:
 # Rscript ./GeneDrawR.R [path_to_input] [path_to_output]
@@ -10,6 +11,8 @@
 # [path_to_input]  has to be a relative or an absolute path to the input file, has to be a tab delimited file containing four columns with a header row (start, end, type, and colour; case insensitive)
 
 # start and end columns:   Numeric values that specify gene position
+# direction:               Either "+" or "-"
+# name:                    Gene name
 # type:                    Either "gene" or "primer", case insensitive
 # colour:                  Colour code as a text such as #FF0000
 
@@ -89,6 +92,23 @@ plot_gene <- function(start, end, type, colour){
 	}
 }
 
+plot_gene_name <- function(start, end, colour, name){
+	if(start < end){
+		weight <- 1
+		hjust <- 0
+		vjust <- 1
+	} else {
+		weight <- -1
+		hjust <- 1
+		vjust <- 0
+	}
+
+	x <- (start + end)/2
+	y <- 1.7*weight
+
+	geom_text(aes(x=x, y=y), label=name, colour=colour, angle=75, size=2, hjust=hjust, vjust=vjust)
+}
+
 
 
 
@@ -98,6 +118,8 @@ args <- commandArgs(trailingOnly=T)
 
 input  <- args[1]
 output <- args[2]
+# input <- "./recA_synteny.txt"
+# output <- "./recA_synteny.pdf"
 
 
 # import
@@ -110,7 +132,7 @@ coord$start  <- as.numeric(coord$start)
 coord$end    <- as.numeric(coord$end)
 
 # check
-idx <- setequal(names(coord), c("start", "end", "type", "colour"))
+idx <- setequal(names(coord), c("start", "end", "direction", "name", "type", "colour"))
 if(!idx){
 	message("Error: The input file contains wrong column names.")
 	q('no')
@@ -128,6 +150,13 @@ if(sum(idx) > 0){
 	q('no')
 }
 
+#
+for(i in 1:nrow(coord)){
+	if(coord$direction[i] == "-"){
+		coord[i,] <- coord[i, c(2, 1, 3, 4, 5, 6)]
+	}
+}
+
 
 # setting parameters
 x_min <- min(c(coord$start, coord$end))
@@ -141,7 +170,8 @@ p <- ggplot() + geom_hline(yintercept=0, size=1, color="black", linetype="solid"
 # plot each gene/perimer
 for(i in 1:nrow(coord)){
 	x <- coord[i,]
-	p <- p + plot_gene(x$start, x$end, x$type, x$colour)
+	# print(x$name)
+	p <- p + plot_gene(x$start, x$end, x$type, x$colour) + plot_gene_name(x$start, x$end, x$colour, x$name)
 }
 
 p <- p +
