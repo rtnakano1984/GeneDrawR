@@ -1,7 +1,7 @@
 # GeneDrawR
 ### R script to draw gene models based on coordinates
 
-Originally by Ryohei Thomas Nakano, PhD; nakano@mpipz.mpg.de; Last update: 05 Feb 2019
+Originally by Ryohei Thomas Nakano, PhD; nakano@mpipz.mpg.de; Last update (ver. 2): 18 July 2022
 
 ## Dependency:
 - R
@@ -18,6 +18,12 @@ Rscript ./GeneDrawR.R [path_to_input] [path_to_output]
 ## Input files:
 - start and end columns:
     - Numeric values that specify gene position
+- direction column:
+    - "+" or "-"
+    - "start" and "end" will be swapped if "-"
+    - Note: If you already have start and end position according to the direction, put "+" to all genes
+- name:
+    - Name of genes that will be plotted
 - type:
     - Either "gene" or "primer", case insensitive
 - colour:
