@@ -13,6 +13,7 @@
 # start and end columns:   Numeric values that specify gene position
 # direction:               Either "+" or "-"
 # name:                    Gene name
+# gene_id:                 gene_id, such as Rhizo1005_gene_1947
 # type:                    Either "gene" or "primer", case insensitive
 # colour:                  Colour code as a text such as #FF0000
 
@@ -132,7 +133,7 @@ coord$start  <- as.numeric(coord$start)
 coord$end    <- as.numeric(coord$end)
 
 # check
-idx <- setequal(names(coord), c("start", "end", "direction", "name", "type", "colour"))
+idx <- setequal(names(coord), c("start", "end", "direction", "name", "gene_id", "type", "colour", "gene_id"))
 if(!idx){
 	message("Error: The input file contains wrong column names.")
 	q('no')
@@ -153,7 +154,7 @@ if(sum(idx) > 0){
 #
 for(i in 1:nrow(coord)){
 	if(coord$direction[i] == "-"){
-		coord[i,] <- coord[i, c(2, 1, 3, 4, 5, 6)]
+		coord[i,] <- coord[i, c(2, 1, 3:ncol(coord))]
 	}
 }
 
@@ -177,18 +178,19 @@ for(i in 1:nrow(coord)){
 p <- p +
 	xlim(x_lim) +
 	ylim(c(-3, 3)) +
-	labs(x="Position", y="") +
+	labs(x="Position", y="", title=paste("Genome synteny [", head(coord$gene_id, 1), " - ", tail(coord$gene_id, 1), "]   :   Created on ", Sys.time(), sep="")) +
 	theme_bw() +
 	theme(axis.text.y=element_blank(),
 	      axis.line.y=element_blank(),
 	      axis.ticks.y=element_blank(),
 	      axis.line.x=element_line(),
+	      plot.title=element_text(size=5),
 	      panel.background=element_rect(fill="transparent", colour=NA),
 	      panel.grid=element_blank(),
 	      panel.border=element_blank())
 
 # export
-ggsave(p, file=output, width=10, height=3, bg="transparent")
+ggsave(p, file=output, width=10, height=3.5, bg="transparent")
 
 
 
